@@ -48,34 +48,33 @@ app.post('/', function(req, res){
      var cal = met*(personInfo.weight*personInfo.time)/60;
 
      db.sync().then(function () {
-       Data
-       .create({
+       Data.create({
          Activity: personInfo.activity,
          Weight: personInfo.weight,
          Time: personInfo.time,
          Calories: cal
-       })
-       .then(function(data){
-         res.render('show',{
-           activity: data.get('Activity'),
-           weight: data.get('Weight'),
-           time: data.get('Time'),
-           calories: data.get('Calories')
 
-         });
+       });
+       Data.findAll().then(function(data){
+         res.render('show',{ results : data}
+         );
+         console.log(data.Activity + ' ' 
+         + data.Weight + ' ' 
+         + data.Time + ' '
+         + data.Calories);
         // res.redirect('/show');
        });
    });
   };
 });
 
-app.get('/show', function(req, res){
-  db.Data.findAll().then(function(data){
-    res.render('show',{
-      message: data
-    });
-  });
-});
+// app.get('/show', function(req, res){
+//   db.Data.findAll().then(function(data){
+//     res.render('show',{
+//       message: data
+//     });
+//   });
+// });
 app.get('/exercise', function(req, res){
    res.render('exercise');
 });
