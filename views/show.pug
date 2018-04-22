@@ -7,13 +7,16 @@ html
         th Weight(กก.)
         th Time(นาที)
         th Calories
-      
+
       for item in results
         tr
           td=item.Activity
           td=item.Weight
           td=item.Time
           td=item.Calories
-
+          form(action="/deleteTable", method = "POST")
+            td
+              button(type="submit", value=item.id, name="id") Delete
     br
-    button(type="button" value="Back" onclick="history.back()") Back
+    br
+    a(href="/") Back

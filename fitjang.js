@@ -53,28 +53,47 @@ app.post('/', function(req, res){
          Weight: personInfo.weight,
          Time: personInfo.time,
          Calories: cal
-
-       });
+       })
        Data.findAll().then(function(data){
-         res.render('show',{ results : data}
-         );
-         console.log(data.Activity + ' ' 
-         + data.Weight + ' ' 
-         + data.Time + ' '
-         + data.Calories);
-        // res.redirect('/show');
+         res.render('show',{
+           results: data
+         });
        });
    });
   };
 });
 
 // app.get('/show', function(req, res){
-//   db.Data.findAll().then(function(data){
-//     res.render('show',{
-//       message: data
-//     });
-//   });
+//   res.render('show', {
+//     message: Data.getAll()
+//   })
+  // db.Data.getAll().then(function(data){
+  //   res.render('show',{
+  //     message: data
+  //   });
+  // });
 // });
+
+app.post('/deleteTable', function(req, res){
+  var deleteId = req.body;
+  db.sync().then(function (){
+    Data.findById( deleteId.id).then(function(data){
+      data.destroy();
+    });
+    res.redirect('/show');
+   });
+});
+
+app.get('/show', function(req, res){
+  db.sync().then(function (){
+    Data.findAll().then(function(data){
+      res.render('show',{
+        results: data
+      });
+    });
+  });
+});
+
 app.get('/exercise', function(req, res){
    res.render('exercise');
 });
