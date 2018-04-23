@@ -37,44 +37,83 @@ app.get('/', function(req, res){
 
 app.post('/', function(req, res){
    var personInfo = req.body; //Get the parsed information
+   console.log(personInfo);
    if(!personInfo.activity || !personInfo.weight || !personInfo.time){
       res.send("Error");
-   }else {
-     if(personInfo.activity == "run"){
-       var met = 7};
-     if(personInfo.activity == "jogging"){
-       var met = 4.5};
+   }
+   else {
+    //  if(personInfo.activity == "run"){
+    //    var met = 7};
+    //  if(personInfo.activity == "jogging"){
+    //    var met = 4.5};
 
-     var cal = met*(personInfo.weight*personInfo.time)/60;
+    var cal;
 
-     db.sync().then(function () {
-       Data.create({
-         Activity: personInfo.activity,
-         Weight: personInfo.weight,
-         Time: personInfo.time,
-         Calories: cal
-
-       });
-       Data.findAll().then(function(data){
-         res.render('show',{ results : data}
-         );
-         console.log(data.Activity + ' ' 
-         + data.Weight + ' ' 
-         + data.Time + ' '
-         + data.Calories);
-        // res.redirect('/show');
-       });
-   });
+    db.sync().then(function () {
+      
+      Mets.findOne({Activity:personInfo.activity}).then(function (mets){
+        console.log('Data mets value has been retrive ' + mets.Value);
+        cal = mets.Value*(personInfo.weight*personInfo.time)/60;
+        console.log(cal)
+     }).then(function(){
+       
+        console.log(cal)
+        Data.create({
+          Activity: personInfo.activity,
+          Weight: personInfo.weight,
+          Time: personInfo.time,
+          Calories: cal 
+        }).then(function (latestData){
+        
+          console.log("Data has been added", latestData.id )
+        }).then(function (){
+        
+          Data.findAll().then(function(data){
+            res.render('show',{
+              results: data
+            });
+          });
+        });
+      
+      });
+    });
   };
 });
 
 // app.get('/show', function(req, res){
-//   db.Data.findAll().then(function(data){
-//     res.render('show',{
-//       message: data
-//     });
-//   });
+//   res.render('show', {
+//     message: Data.getAll()
+//   })
+  // db.Data.getAll().then(function(data){
+  //   res.render('show',{
+  //     message: data
+  //   });
+  // });
 // });
+
+app.post('/deleteTable', function(req, res){
+
+  var deleteId = req.body;
+  // res.send(deleteId.id)
+  db.sync().then(function (){
+    Data.findById( deleteId.id).then(function(data){
+      console.log(data)
+      data.destroy();
+    });
+    res.redirect('/show');
+  });
+});
+
+app.get('/show', function(req, res){
+  db.sync().then(function (){
+    Data.findAll().then(function(data){
+      res.render('show',{
+        results: data
+      });
+    });
+  });
+});
+
 app.get('/exercise', function(req, res){
    res.render('exercise');
 });
