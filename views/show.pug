@@ -8,7 +8,6 @@ html
         th Time(นาที)
         th Calories
 
-
       for item in results
         tr
           td=item.Activity
@@ -20,4 +19,4 @@ html
               button(type="submit", value=item.id, name = "id" ) Delete
 
     br
-    button(type="button" value="Back" onclick="history.back()") Back
+    a(href="/") Back
