@@ -51,8 +51,9 @@ app.post('/', function(req, res){
 
     db.sync().then(function () {
       
-      Mets.findOne({Activity:personInfo.activity}).then(function (mets){
-        console.log('Data mets value has been retrive ' + mets.Value);
+      Mets.find({
+        where: {Activity:personInfo.activity} }).then(function (mets){
+        console.log('Data mets value has been retrive ' + mets.Value + ' which is ' + personInfo.activity);
         cal = mets.Value*(personInfo.weight*personInfo.time)/60;
         console.log(cal)
      }).then(function(){
