@@ -1,6 +1,10 @@
 {
   "name": "nodefit",
   "version": "1.0.0",
+<<<<<<< HEAD
+=======
+  "description": "",
+>>>>>>> 7fba2a1283da6947a2221b901dd8c753f27d4610
   "main": "fitjang.js",
   "scripts": {
     "test": "mocha"
@@ -23,6 +27,7 @@
     "mocha": "^5.1.1",
     "nock": "^9.2.5",
     "request": "^2.85.0",
+<<<<<<< HEAD
     "sequelize-mock": "^0.10.2",
     "should": "^13.2.1",
     "supertest": "^3.0.0"
@@ -31,4 +36,8 @@
     "test": "test"
   },
   "description": ""
+=======
+    "sequelize-mock": "^0.10.2"
+  }
+>>>>>>> 7fba2a1283da6947a2221b901dd8c753f27d4610
 }
