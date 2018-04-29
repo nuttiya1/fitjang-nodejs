@@ -1,0 +1,22 @@
+html
+  head
+    title Fit Jang
+    table(border='1')
+      tr
+        th Activity
+        th Weight(กก.)
+        th Time(นาที)
+        th Calories
+
+      for item in results
+        tr
+          td=item.Activity
+          td=item.Weight
+          td=item.Time
+          td=item.Calories
+          form(action="/deleteTable", method = "POST")
+            td
+              button(type="submit", value=item.id, name = "id" ) Delete
+
+    br
+    a(href="/") Back
