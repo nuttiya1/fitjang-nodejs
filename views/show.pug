@@ -1,22 +1,27 @@
 html
   head
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     title Fit Jang
-    table(border='1')
-      tr
-        th Activity
-        th Weight(กก.)
-        th Time(นาที)
-        th Calories
-
-      for item in results
+    table(class="table")
+      thead(class="thead-dark")
         tr
-          td=item.Activity
-          td=item.Weight
-          td=item.Time
-          td=item.Calories
-          form(action="/deleteTable", method = "POST")
-            td
-              button(type="submit", value=item.id, name = "id" ) Delete
+          th(scope="col") #
+          th(scope="col") Activity
+          th(scope="col") Weight(กก.)
+          th(scope="col") Time(นาที)
+          th(scope="col") Calories
+          th(scope="col") Delete
+
+        each item,index in results
+          tr
+            td(scope="row")=index+1
+            td(scope="row")=item.Activity
+            td(scope="row")=item.Weight
+            td(scope="row")=item.Time
+            td(scope="row")=item.Calories
+            form(action="/deleteTable", method = "POST")
+              td
+                button(class="btn btn-primary" type="submit", value=item.id, name = "id" ) Delete
 
     br
-    a(href="/") Back
+    a(class="btn btn-primary" href="/" style="margin-left:20px;") Back
