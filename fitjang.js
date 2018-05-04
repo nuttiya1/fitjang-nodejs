@@ -37,7 +37,6 @@ app.get('/', function(req, res){
 
 app.post('/', function(req, res){
    var personInfo = req.body; //Get the parsed information
-   console.log(personInfo);
    if(!personInfo.activity || !personInfo.weight || !personInfo.time){
       res.send("Error");
    }
@@ -52,16 +51,16 @@ app.post('/', function(req, res){
         cal = calculateCal(mets, personInfo);
         console.log(cal)
      }).then(function(){
-
-        console.log(cal)
         Data.create({
           Activity: personInfo.activity,
           Weight: personInfo.weight,
           Time: personInfo.time,
           Calories: cal
         }).then(function (latestData){
-
           console.log("Data has been added", latestData.id )
+          app.get('/test', function(req, res){
+            res.send(latestData);
+          });
         }).then(function (){
 
           Data.findAll().then(function(data){
@@ -82,8 +81,9 @@ function calculateCal(mets, personInfo){
 app.post('/deleteTable', function(req, res){
 
   var deleteId = req.body;
+  console.log("delete id : " , deleteId);
   db.sync().then(function (){
-    Data.findById( deleteId.id).then(function(data){
+    Data.findById(deleteId.id).then(function(data){
       data.destroy();
     });
     res.redirect('/show');
@@ -100,6 +100,12 @@ app.get('/show', function(req, res){
   });
 });
 
+app.use(express.static('public'));
+
+app.get('/aboutme', function(req, res){
+   res.render('aboutme');
+});
+
 app.get('/exercise', function(req, res){
    res.render('exercise');
 });
@@ -107,6 +113,12 @@ app.get('/exercise', function(req, res){
 app.get('/food', function(req, res){
    res.send("วิธีการกิน");
 });
+
+// app.get('/test', function(req, res){
+//   db.sync().then(function () {
+//     res.send(latestData);
+//   });
+// });
 
 app.listen(3000);
 module.exports = app;
