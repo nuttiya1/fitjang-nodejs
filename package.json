@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "fitjang.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "nodemon fitjang.js"
   },
   "author": "",
   "license": "ISC",

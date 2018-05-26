@@ -107,18 +107,36 @@ app.get('/aboutme', function(req, res){
 });
 
 app.get('/exercise', function(req, res){
-   res.render('exercise');
+  res.render('exercise');
 });
 
-app.get('/food', function(req, res){
-   res.send("วิธีการกิน");
+app.get('/exercise/chest', function(req, res){
+ res.render('chest');
 });
 
-// app.get('/test', function(req, res){
-//   db.sync().then(function () {
-//     res.send(latestData);
-//   });
-// });
+app.get('/exercise/back', function(req, res){
+ res.render('back');
+});
+
+app.get('/exercise/arms', function(req, res){
+ res.render('arms');
+});
+
+app.get('/exercise/shoulder', function(req, res){
+ res.render('shoulder');
+});
+
+app.get('/exercise/legs', function(req, res){
+ res.render('legs');
+});
+
+app.get('/exercise/belly', function(req, res){
+ res.render('belly');
+});
+
+app.get('/foods', function(req, res){
+ res.render('foods');
+});
 
 app.listen(3000);
 module.exports = app;
